@@ -11,10 +11,11 @@ pipeline {
     stage('Validate Environment') {
       steps {
         sh '''
-ls
-pwd
-env
-'''
+	ls
+	pwd
+	env
+	whoami
+	'''
       }
     }
 
@@ -31,22 +32,33 @@ env
 
     stage('build') {
       steps {
-        sh "docker build -t lordblackfish/evil-image:$BUILD_NUMBER ."
+        sh ''' 
+	docker build -t lordblackfish/evil-image:$BUILD_NUMBER .
+        docker image ls
+        docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
+	'''
       }
     }
 
-    stage('push to reg') {
+    stage('push to dockerhub') {
       steps {
         sh '''
-	docker image ls
-	docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
         echo "$DOCKER_PSW" | docker login --username $DOCKER_ID --password-stdin
 	docker push lordblackfish/evil-image:${BUILD_NUMBER}
 	docker image rm lordblackfish/evil-image:${BUILD_NUMBER}
-        docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
-'''
+       '''
       }
     }
+
+
+    stage('test artifact') {
+      steps {
+        sh '''
+        docker run --rm lordblackfish/evil-image:$latest cat manfist.bible
+       '''
+      }
+    }
+
 
   }
   environment {
