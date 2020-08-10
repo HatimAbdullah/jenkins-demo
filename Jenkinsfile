@@ -42,7 +42,7 @@ env
 	docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
         echo "$DOCKER_PSW" | docker login --username $DOCKER_ID --password-stdin
 	docker push lordblackfish/evil-image:${BUILD_NUMBER}
-	docker image rm evil-image:${BUILD_NUMBER}
+	docker image rm lordblackfish/evil-image:${BUILD_NUMBER}
         docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
 '''
       }
