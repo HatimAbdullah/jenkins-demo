@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
         image 'docker'
-	args '-v /var/run/docker.sock:/var/run/docker.sock' 
+	args '-v /var/run/docker.sock:/var/run/docker.sock -u root' 
     }
 
 
@@ -31,7 +31,7 @@ env
 
     stage('build') {
       steps {
-        sh "docker build -t evil-image:$BUILD_NUMBER ."
+        sh "docker build -t lordblackfish/evil-image:$BUILD_NUMBER ."
       }
     }
 
@@ -39,8 +39,8 @@ env
       steps {
         sh '''
 	docker image ls
-	docker run --rm evil-image:${BUILD_NUMBER} cat manfist.bible
-        echo "$DOCKER_PSW" | sudo docker login --username $DOCKER_ID --password-stdin
+	docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
+        echo "$DOCKER_PSW" | docker login --username $DOCKER_ID --password-stdin
 	docker push lordblackfish/evil-image:${BUILD_NUMBER}
 	docker image rm evil-image:${BUILD_NUMBER}
         docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
