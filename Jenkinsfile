@@ -21,7 +21,7 @@ env
     stage('manifest artifact') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-	  sh "echo 'time :' ${TAG_DATE} > manfist.bible"
+	  sh "echo 'time :' 0 > manfist.bible"
 	  sh "echo 'build number :' ${BUILD_NUMBER} >> manfist.bible"
 	  sh "echo 'built by : fish pipeline ' >> manfist.bible"
         }
