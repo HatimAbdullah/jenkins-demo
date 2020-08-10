@@ -11,10 +11,10 @@ pipeline {
     stage('Validate Environment') {
       steps {
         sh '''
-	ls
-	pwd
-	env
-	whoami
+ls
+pwd
+env
+whoami
 	'''
       }
     }
