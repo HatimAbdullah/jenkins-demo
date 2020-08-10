@@ -22,9 +22,11 @@ pipeline {
     stage('manifest artifact') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-	  sh "echo 'time :' 0 > manfist.bible"
+	  sh "date > manfist.bible"
 	  sh "echo 'build number :' ${BUILD_NUMBER} >> manfist.bible"
-	  sh "echo 'built by : fish pipeline ' >> manfist.bible"
+	  sh "echo 'git commit :' ${GIT_COMMIT} >> manfist.bible"
+	  sh "echo 'git url :' ${GIT_URL} >> manfist.bible"
+	  sh "echo 'built by :' ${OWNER} >> manfist.bible"
         }
 
       }
