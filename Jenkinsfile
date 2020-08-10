@@ -21,9 +21,9 @@ env
     stage('manifest artifact') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-          sh "echo 'time' > manfist.bible"
-	  sh "echo ${BUILD_ID} >> manfist.bible"
+	  sh "echo 'time :' ${BUILD_ID} > manfist.bible"
 	  sh "echo 'build number :' ${BUILD_NUMBER} >> manfist.bible"
+	  sh "echo 'built by : fish pipeline '"
         }
 
       }
@@ -35,11 +35,15 @@ env
       }
     }
 
-    stage('ls') {
+    stage('push to reg') {
       steps {
         sh '''
 	docker image ls
 	docker run --rm evil-image:${BUILD_NUMBER} cat manfist.bible
+        docker login -u lordblackfish -p r28RW3E5i4Ex
+	docker push lordblackfish/evil-image:${BUILD_NUMBER}
+	docker image rm evil-image:${BUILD_NUMBER}
+        docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
 '''
       }
     }
