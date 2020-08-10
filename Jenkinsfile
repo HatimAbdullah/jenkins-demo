@@ -39,7 +39,7 @@ env
       steps {
         sh '''
 	docker image ls
-	docker run evil-image:${BUILD_NUMBER} cat manfist.bible
+	docker run --rm evil-image:${BUILD_NUMBER} ls
 '''
       }
     }
