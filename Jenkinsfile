@@ -22,7 +22,7 @@ env
       steps {
         timeout(time: 10, unit: 'MINUTES') {
           sh "echo 'time' > manfist.bible"
-	  sh "echo $(date) >> manfist.bible"
+	  sh "echo ${date} >> manfist.bible"
 	  sh "echo 'build number :' $BUILD_NUMBER >> manfist.bible"
         }
 
