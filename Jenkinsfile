@@ -18,18 +18,20 @@ env
       }
     }
 
-    stage('build') {
+    stage('manifest artifact') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-          sh 'ls -a'
+          sh "echo 'time' > manfist.bible"
+	  sh "echo $(date) >> manfist.bible"
+	  sh "echo 'build number :' $BUILD_NUMBER >> manfist.bible"
         }
 
       }
     }
 
-    stage('Test') {
+    stage('build') {
       steps {
-        git(url: 'https://github.com/KnowledgeHut-AWS/jenkins', branch: 'master')
+        sh "docker build -t $BUILD_NUMBER ."
       }
     }
 
@@ -39,7 +41,7 @@ env
 date 
 ls 
 pwd
-
+docker image ls
 '''
       }
     }
