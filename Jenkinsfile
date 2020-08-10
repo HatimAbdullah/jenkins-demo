@@ -35,11 +35,11 @@ env
       }
     }
 
-    stage('Release') {
+    stage('ls') {
       steps {
         sh '''
 	docker image ls
-	docker run --rm evil-image:${BUILD_NUMBER} ls
+	docker run --rm evil-image:${BUILD_NUMBER} cat manfist.bible
 '''
       }
     }
