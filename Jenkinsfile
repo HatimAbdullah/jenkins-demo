@@ -1,8 +1,11 @@
 pipeline {
   agent {
-    dockerfile {
-      filename 'Dockerfile'
+    docker {
+        image 'bryandollery/terraform-packer-aws-alpine'
+        label 'evil-application'
+        args  '-v /var/run/docker.sock:/var/run/docker.sock'
     }
+
 
   }
   stages {
