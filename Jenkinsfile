@@ -31,17 +31,15 @@ env
 
     stage('build') {
       steps {
-        sh "docker build -t $BUILD_NUMBER ."
+        sh "docker build -t evil-image:$BUILD_NUMBER ."
       }
     }
 
     stage('Release') {
       steps {
         sh '''
-date 
-ls 
-pwd
-docker image ls
+	docker image ls
+	docker run evil-image:${BUILD_NUMBER} cat manfist.bible
 '''
       }
     }

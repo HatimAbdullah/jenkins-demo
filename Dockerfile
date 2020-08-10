@@ -1,3 +1,4 @@
-from bryandollery/terraform-packer-aws-alpine
+from alpine
+COPY ./manfist.bible .
 
 entrypoint ["/bin/bash", "-c"]
