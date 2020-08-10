@@ -19,7 +19,7 @@ env
     stage('build') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-          sh 'packer build packer.json'
+          sh 'ls -a'
         }
 
       }
@@ -33,15 +33,17 @@ env
 
     stage('Release') {
       steps {
-        echo 'so close no matter how far'
+        sh '''
+date 
+ls 
+pwd
+
+'''
       }
     }
 
   }
   environment {
-    CREDS = credentials('aws-creds')
-    AWS_ACCESS_KEY_ID = "$CREDS_USR"
-    AWS_SECRET_ACCESS_KEY = "$CREDS_PSW"
     OWNER = 'jenkins'
   }
 }
