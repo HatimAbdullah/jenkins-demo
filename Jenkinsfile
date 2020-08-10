@@ -54,7 +54,7 @@ pipeline {
     stage('test artifact') {
       steps {
         sh '''
-        docker run --rm lordblackfish/evil-image:$latest cat manfist.bible
+        docker run --rm lordblackfish/evil-image:latest cat manfist.bible
        '''
       }
     }
