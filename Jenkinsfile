@@ -21,9 +21,9 @@ env
     stage('manifest artifact') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-	  sh "echo 'time :' ${BUILD_ID} > manfist.bible"
+	  sh "echo 'time :' ${TAG_DATE} > manfist.bible"
 	  sh "echo 'build number :' ${BUILD_NUMBER} >> manfist.bible"
-	  sh "echo 'built by : fish pipeline '"
+	  sh "echo 'built by : fish pipeline ' >> manfist.bible"
         }
 
       }
@@ -40,7 +40,7 @@ env
         sh '''
 	docker image ls
 	docker run --rm evil-image:${BUILD_NUMBER} cat manfist.bible
-        docker login -u lordblackfish -p r28RW3E5i4Ex
+        echo "$DOCKER_PSW" | docker login --username $DOCKER_ID --password-stdin
 	docker push lordblackfish/evil-image:${BUILD_NUMBER}
 	docker image rm evil-image:${BUILD_NUMBER}
         docker run --rm lordblackfish/evil-image:${BUILD_NUMBER} cat manfist.bible
@@ -50,6 +50,9 @@ env
 
   }
   environment {
+    CREDS = credentials('docker-creds')
+    DOCKER_ID = "$CREDS_USR"
+    DOCKER_PSW = "$CREDS_PSW"
     OWNER = 'jenkins'
   }
 }
